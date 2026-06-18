@@ -1,26 +1,132 @@
+@import url('https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800&family=Sarabun:wght@300;400;500;600;700&display=swap');
+
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Brand colors */
+  --color-primary: #121212;
+  --color-secondary: #2A2A2A;
+  --color-gray: #D9D9D9;
+  --color-white: #FFFFFF;
+  --color-accent: #5A5A5A;
+
+  /* Extended palette */
+  --color-border: #E5E5E5;
+  --color-surface: #F8F8F8;
+  --color-muted: #888888;
+
+  /* Condition badge colors */
+  --condition-like-new-bg: #121212;
+  --condition-like-new-text: #FFFFFF;
+  --condition-excellent-bg: #2A2A2A;
+  --condition-excellent-text: #FFFFFF;
+  --condition-very-good-bg: #5A5A5A;
+  --condition-very-good-text: #FFFFFF;
+  --condition-good-bg: #D9D9D9;
+  --condition-good-text: #121212;
+  --condition-fair-bg: #F0F0F0;
+  --condition-fair-text: #121212;
+
+  /* Z-index scale */
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-modal-backdrop: 300;
+  --z-modal: 400;
+  --z-toast: 500;
+  --z-tooltip: 600;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+*, *::before, *::after {
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Sarabun', 'Prompt', sans-serif;
+  background-color: var(--color-white);
+  color: var(--color-primary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Prompt', 'Sarabun', sans-serif;
+  font-weight: 700;
+  line-height: 1.2;
+  text-wrap: balance;
+  color: var(--color-primary);
+}
+
+/* Focus styles */
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-surface);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-gray);
+  border-radius: 3px;
+}
+
+/* Condition badges */
+.condition-like-new {
+  background-color: var(--condition-like-new-bg);
+  color: var(--condition-like-new-text);
+}
+.condition-excellent {
+  background-color: var(--condition-excellent-bg);
+  color: var(--condition-excellent-text);
+}
+.condition-very-good {
+  background-color: var(--condition-very-good-bg);
+  color: var(--condition-very-good-text);
+}
+.condition-good {
+  background-color: var(--condition-good-bg);
+  color: var(--condition-good-text);
+}
+.condition-fair {
+  background-color: var(--condition-fair-bg);
+  color: var(--condition-fair-text);
+}
+
+/* Smooth transitions */
+.transition-base {
+  transition: all 0.2s ease;
+}
+
+/* Animation */
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slide-in-left {
+  from { opacity: 0; transform: translateX(-16px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.4s ease forwards;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }
