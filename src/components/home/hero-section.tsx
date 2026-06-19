@@ -131,8 +131,8 @@ export function HeroSection() {
               { icon: Percent, title: 'แจ้งสภาพจริงเป็น %', desc: 'โปร่งใสที่สุด' },
               { icon: Tag, title: 'ราคาคุ้มค่า', desc: 'ของดีไม่ต้องแพง' },
             ].map(({ icon: Icon, title, desc }) => (
-              <div key={title} className="flex items-start gap-3">
-                <Icon className="w-5 h-5 text-[#5A5A5A] flex-shrink-0 mt-0.5" strokeWidth={1.5} />
+              <div key={title} className="flex items-center md:justify-center gap-3">
+                <Icon className="w-5 h-5 text-[#5A5A5A] flex-shrink-0" strokeWidth={1.5} />
                 <div>
                   <p className="font-[family-name:var(--font-prompt)] font-semibold text-white text-sm">{title}</p>
                   <p className="text-[#5A5A5A] text-xs font-[family-name:var(--font-sarabun)]">{desc}</p>
