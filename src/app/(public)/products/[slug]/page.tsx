@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowLeft, CheckCircle, Wrench, ClipboardList } from 'lucide-react'
+import { ArrowLeft, CheckCircle, Wrench, ClipboardList, Package } from 'lucide-react'
 import { createPublicClient } from '@/lib/supabase/server'
 
 export const dynamicParams = true
@@ -144,7 +144,7 @@ export default async function ProductDetailPage({
                   />
                 ) : (
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="text-6xl opacity-20">📦</span>
+                    <Package className="w-16 h-16 text-[#5A5A5A] opacity-20" strokeWidth={1.5} />
                   </div>
                 )}
                 {isSold && (

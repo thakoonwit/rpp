@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getCategories } from '@/lib/actions/categories'
+import { CategoryIcon } from '@/components/categories/category-icon'
 
 export const metadata: Metadata = {
   title: 'หมวดหมู่สินค้า',
@@ -31,9 +32,10 @@ export default async function CategoriesPage() {
               href={`/categories/${cat.slug}`}
               className="group flex flex-col items-center gap-4 p-8 bg-white rounded-2xl border border-[#E5E5E5] hover:border-[#121212] hover:shadow-lg transition-all duration-300"
             >
-              <span className="text-4xl group-hover:scale-110 transition-transform duration-300">
-                {cat.icon || '📦'}
-              </span>
+              <CategoryIcon
+                slug={cat.slug}
+                className="w-10 h-10 text-[#5A5A5A] group-hover:text-[#121212] group-hover:scale-110 transition-all duration-300"
+              />
               <div className="text-center">
                 <h2 className="font-[family-name:var(--font-prompt)] font-bold text-sm text-[#121212]">
                   {cat.name}

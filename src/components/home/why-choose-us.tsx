@@ -1,21 +1,23 @@
+import { ShieldCheck, Wrench, Percent, Tag } from 'lucide-react'
+
 const features = [
   {
-    icon: '✅',
+    icon: ShieldCheck,
     title: 'ตรวจสอบก่อนขาย',
     desc: 'สินค้าทุกชิ้นผ่านการตรวจสอบโดยทีมงาน RPSZZ อย่างละเอียด ไม่มีปกปิด',
   },
   {
-    icon: '🔧',
+    icon: Wrench,
     title: 'ซ่อมและทำความสะอาด',
     desc: 'แก้ไขและทำความสะอาดให้พร้อมใช้งาน เหมือนใหม่ในราคาที่เข้าถึงได้',
   },
   {
-    icon: '📊',
+    icon: Percent,
     title: 'แจ้งสภาพจริงเป็น %',
     desc: 'ประเมินสภาพสินค้าเป็นเปอร์เซ็นต์อย่างตรงไปตรงมา ไม่โอเวอร์เรท',
   },
   {
-    icon: '💰',
+    icon: Tag,
     title: 'ราคาคุ้มค่า',
     desc: 'คุณภาพที่คุ้มกับทุกบาทที่จ่ายไป ไม่ต้องจ่ายแพงเพื่อของดี',
   },
@@ -39,12 +41,12 @@ export function WhyChooseUs() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {features.map(({ icon, title, desc }) => (
+          {features.map(({ icon: Icon, title, desc }) => (
             <div
               key={title}
               className="flex flex-col gap-4 p-6 rounded-xl bg-[#1A1A1A] border border-[#2A2A2A] hover:border-[#3A3A3A] transition-colors duration-300"
             >
-              <div className="text-4xl" role="img" aria-hidden="true">{icon}</div>
+              <Icon className="w-8 h-8 text-[#5A5A5A]" strokeWidth={1.5} />
               <h3 className="font-[family-name:var(--font-prompt)] font-bold !text-white text-base">
                 {title}
               </h3>

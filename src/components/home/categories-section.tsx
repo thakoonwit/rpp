@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { getCategories } from '@/lib/actions/categories'
+import { CategoryIcon } from '@/components/categories/category-icon'
 
 export async function CategoriesSection() {
   const { categories } = await getCategories()
@@ -31,13 +32,10 @@ export async function CategoriesSection() {
               className="group flex flex-col items-center gap-3 p-5 bg-white rounded-xl border border-[#E5E5E5] hover:border-[#121212] hover:shadow-md transition-all duration-300"
               aria-label={`หมวดหมู่ ${cat.name}`}
             >
-              <span
-                className="text-3xl group-hover:scale-110 transition-transform duration-300"
-                role="img"
-                aria-hidden="true"
-              >
-                {cat.icon || '📦'}
-              </span>
+              <CategoryIcon
+                slug={cat.slug}
+                className="w-8 h-8 text-[#5A5A5A] group-hover:text-[#121212] group-hover:scale-110 transition-all duration-300"
+              />
               <span className="font-[family-name:var(--font-sarabun)] font-semibold text-sm text-[#121212] text-center leading-tight">
                 {cat.name}
               </span>

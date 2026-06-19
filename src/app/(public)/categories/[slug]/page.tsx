@@ -24,6 +24,7 @@ export async function generateStaticParams() {
 import { ProductGrid } from '@/components/products/product-grid'
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
+import { CategoryIcon } from '@/components/categories/category-icon'
 
 export async function generateMetadata({
   params,
@@ -83,7 +84,7 @@ export default async function CategoryPage({
             หมวดหมู่ทั้งหมด
           </Link>
           <div className="flex items-center gap-3">
-            <span className="text-3xl">{category.icon}</span>
+            <CategoryIcon slug={category.slug} className="w-8 h-8 text-white" />
             <div>
               <h1 className="font-[family-name:var(--font-prompt)] font-bold text-white text-3xl">
                 {category.name}
