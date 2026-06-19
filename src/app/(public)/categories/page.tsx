@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { createClient } from '@/lib/supabase/server'
+import { getCategories } from '@/lib/actions/categories'
 
 export const metadata: Metadata = {
   title: 'หมวดหมู่สินค้า',
@@ -8,11 +8,8 @@ export const metadata: Metadata = {
 }
 
 export default async function CategoriesPage() {
-  const supabase = await createClient()
-  const { data: categories } = (await supabase
-    .from('categories')
-    .select('*, products(count)')
-    .order('sort_order')) as any
+  const { categories } = await getCategories()
+
 
 
   return (

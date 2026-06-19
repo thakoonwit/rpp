@@ -3,6 +3,8 @@ import { Suspense } from 'react'
 import { createClient } from '@/lib/supabase/server'
 import { ProductGrid } from '@/components/products/product-grid'
 import { ProductGridSkeleton } from '@/components/products/product-skeleton'
+import { getProducts } from '@/lib/actions/products'
+
 
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
@@ -24,37 +26,21 @@ const STATUS_FILTERS = [
 
 async function ProductsContent({
   search,
-  category,
   status,
   page,
 }: {
   search?: string
-  category?: string
   status?: string
   page?: number
 }) {
-  const supabase = await createClient()
   const currentPage = page || 1
   const limit = 20
-  const offset = (currentPage - 1) * limit
-
-  let query = supabase
-    .from('products')
-    .select('*, product_images(*), categories(*)', { count: 'exact' })
-    .order('created_at', { ascending: false })
-    .range(offset, offset + limit - 1)
-
-  if (status) {
-    query = query.eq('status', status)
-  } else {
-    query = query.neq('status', 'draft')
-  }
-
-  if (search) {
-    query = query.ilike('name', `%${search}%`)
-  }
-
-  const { data: products, count } = await query
+  const { products, total: count } = await getProducts({
+    page: currentPage,
+    limit,
+    status,
+    search,
+  })
   const totalPages = Math.ceil((count || 0) / limit)
 
   return (

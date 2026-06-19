@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { createClient } from '@/lib/supabase/server'
+import { createClient, createPublicClient } from '@/lib/supabase/server'
+import { getProducts } from '@/lib/actions/products'
+
 
 export const dynamicParams = true
 export const revalidate = 3600
@@ -53,7 +55,7 @@ export default async function CategoryPage({
   params: Promise<{ slug: string }>
 }) {
   const { slug } = await params
-  const supabase = await createClient()
+  const supabase = createPublicClient()
 
   const { data: category } = (await supabase
     .from('categories')
@@ -64,12 +66,10 @@ export default async function CategoryPage({
 
   if (!category) notFound()
 
-  const { data: products } = await supabase
-    .from('products')
-    .select('*, product_images(*), categories(*)')
-    .eq('category_id', category.id)
-    .neq('status', 'draft')
-    .order('created_at', { ascending: false })
+  const { products } = await getProducts({
+    category: slug,
+  })
+
 
   return (
     <div className="min-h-screen bg-white">
