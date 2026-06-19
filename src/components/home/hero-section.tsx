@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, Search, Wrench, Percent, Tag } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
 export function HeroSection() {
@@ -115,13 +115,13 @@ export function HeroSection() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
-              { icon: '🔍', title: 'ตรวจสอบก่อนขาย', desc: 'เช็คทุกจุดไม่มีปิดบัง' },
-              { icon: '🔧', title: 'ซ่อมและทำความสะอาด', desc: 'พร้อมใช้งานทันที' },
-              { icon: '📊', title: 'แจ้งสภาพจริงเป็น %', desc: 'โปร่งใสที่สุด' },
-              { icon: '💰', title: 'ราคาคุ้มค่า', desc: 'ของดีไม่ต้องแพง' },
-            ].map(({ icon, title, desc }) => (
+              { icon: Search, title: 'ตรวจสอบก่อนขาย', desc: 'เช็คทุกจุดไม่มีปิดบัง' },
+              { icon: Wrench, title: 'ซ่อมและทำความสะอาด', desc: 'พร้อมใช้งานทันที' },
+              { icon: Percent, title: 'แจ้งสภาพจริงเป็น %', desc: 'โปร่งใสที่สุด' },
+              { icon: Tag, title: 'ราคาคุ้มค่า', desc: 'ของดีไม่ต้องแพง' },
+            ].map(({ icon: Icon, title, desc }) => (
               <div key={title} className="flex items-start gap-3">
-                <span className="text-xl flex-shrink-0 mt-0.5">{icon}</span>
+                <Icon className="w-5 h-5 text-[#5A5A5A] flex-shrink-0 mt-0.5" strokeWidth={1.5} />
                 <div>
                   <p className="font-[family-name:var(--font-prompt)] font-semibold text-white text-sm">{title}</p>
                   <p className="text-[#5A5A5A] text-xs font-[family-name:var(--font-sarabun)]">{desc}</p>
