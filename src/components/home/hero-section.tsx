@@ -101,8 +101,19 @@ export function HeroSection() {
                   <span className="font-[family-name:var(--font-prompt)] font-bold text-white text-lg">{pct}%</span>
                 </div>
                 <div className="flex-1">
-                  <p className="font-[family-name:var(--font-prompt)] font-semibold text-white text-sm">{label}</p>
-                  <p className="text-[#5A5A5A] text-xs font-[family-name:var(--font-sarabun)]">{desc}</p>
+                  <div className="flex justify-between items-baseline mb-1.5 gap-2">
+                    <p className="font-[family-name:var(--font-prompt)] font-semibold text-white text-sm">{label}</p>
+                    <p className="text-[#5A5A5A] text-xs font-[family-name:var(--font-sarabun)] text-right">{desc}</p>
+                  </div>
+                  <div className="w-full h-1 bg-[#2A2A2A] rounded-full overflow-hidden">
+                    <div
+                      className="h-full rounded-full transition-all duration-500"
+                      style={{
+                        width: `${pct}%`,
+                        backgroundColor: pct >= 99 ? '#FFFFFF' : pct >= 95 ? '#D9D9D9' : pct >= 90 ? '#A3A3A3' : pct >= 85 ? '#737373' : '#404040'
+                      }}
+                    />
+                  </div>
                 </div>
               </div>
             ))}
