@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { createClient, createPublicClient } from '@/lib/supabase/server'
+import { createPublicClient } from '@/lib/supabase/server'
 import { getProducts } from '@/lib/actions/products'
 
 
@@ -31,7 +31,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>
 }): Promise<Metadata> {
   const { slug } = await params
-  const supabase = await createClient()
+  const supabase = createPublicClient()
   const { data } = await supabase
     .from('categories')
     .select('*')

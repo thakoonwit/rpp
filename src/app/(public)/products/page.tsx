@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { Suspense } from 'react'
-import { createClient } from '@/lib/supabase/server'
+import { createPublicClient } from '@/lib/supabase/server'
 import { ProductGrid } from '@/components/products/product-grid'
 import { ProductGridSkeleton } from '@/components/products/product-skeleton'
 import { getProducts } from '@/lib/actions/products'
@@ -91,7 +91,7 @@ export default async function ProductsPage({
   const status = params.status
   const page = params.page ? parseInt(params.page) : 1
 
-  const supabase = await createClient()
+  const supabase = createPublicClient()
   const { data: categories } = (await supabase
     .from('categories')
     .select('id, name, slug')
