@@ -134,9 +134,23 @@ export function Footer() {
           <p className="text-xs text-[#5A5A5A] font-[family-name:var(--font-sarabun)] text-center sm:text-left">
             © {new Date().getFullYear()} RPSZZ. สงวนลิขสิทธิ์ทุกอย่าง
           </p>
-          <p className="text-xs text-[#5A5A5A] font-[family-name:var(--font-sarabun)]">
-            ของดี ไม่ต้องแพง
-          </p>
+          <div className="flex items-center gap-3">
+            <p className="text-xs text-[#5A5A5A] font-[family-name:var(--font-sarabun)]">
+              ของดี ไม่ต้องแพง
+            </p>
+            <span className="text-[#2A2A2A] text-xs">|</span>
+            <p className="text-xs text-[#5A5A5A] font-[family-name:var(--font-sarabun)]">
+              Powered by{' '}
+              <a
+                href="https://uwaver.site"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#888] hover:text-white underline underline-offset-2 transition-colors duration-200"
+              >
+                Uwaver
+              </a>
+            </p>
+          </div>
         </div>
       </div>
     </footer>
