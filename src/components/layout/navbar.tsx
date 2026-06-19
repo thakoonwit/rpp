@@ -43,7 +43,7 @@ export function Navbar() {
       )}
     >
       <nav
-        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-24 flex items-center justify-between"
+        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 md:h-24 flex items-center justify-between"
         aria-label="Main navigation"
       >
         {/* Logo */}
@@ -56,7 +56,7 @@ export function Navbar() {
             src={logoImg}
             alt="RPSZZ Logo"
             className={cn(
-              "h-20 w-auto object-contain transition-all duration-300",
+              "h-16 md:h-20 w-auto object-contain transition-all duration-300",
               scrolled || !isHomepage ? "" : "brightness-0 invert"
             )}
             priority
