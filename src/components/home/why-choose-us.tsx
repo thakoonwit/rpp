@@ -28,12 +28,12 @@ export function WhyChooseUs() {
         <div className="text-center mb-12">
           <h2
             id="why-heading"
-            className="font-[family-name:var(--font-prompt)] font-bold text-white text-wrap-balance"
+            className="font-[family-name:var(--font-prompt)] font-bold !text-white text-wrap-balance"
             style={{ fontSize: 'clamp(1.5rem, 4vw, 2rem)' }}
           >
             ทำไมต้อง RPSZZ ?
           </h2>
-          <p className="text-[#888] text-sm font-[family-name:var(--font-sarabun)] mt-2 max-w-lg mx-auto">
+          <p className="!text-[#D9D9D9] text-sm font-[family-name:var(--font-sarabun)] mt-2 max-w-lg mx-auto">
             เราเชื่อว่าของมือสองดี ยังมีคุณค่า และสามารถซื้อขายได้อย่างสบายใจ
           </p>
         </div>
@@ -45,10 +45,10 @@ export function WhyChooseUs() {
               className="flex flex-col gap-4 p-6 rounded-xl bg-[#1A1A1A] border border-[#2A2A2A] hover:border-[#3A3A3A] transition-colors duration-300"
             >
               <div className="text-4xl" role="img" aria-hidden="true">{icon}</div>
-              <h3 className="font-[family-name:var(--font-prompt)] font-bold text-white text-base">
+              <h3 className="font-[family-name:var(--font-prompt)] font-bold !text-white text-base">
                 {title}
               </h3>
-              <p className="font-[family-name:var(--font-sarabun)] text-sm text-[#888] leading-relaxed">
+              <p className="font-[family-name:var(--font-sarabun)] text-sm !text-[#D9D9D9] leading-relaxed">
                 {desc}
               </p>
             </div>
