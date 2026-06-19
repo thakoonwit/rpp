@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { Phone, MapPin, Clock } from "lucide-react";
 import { Instagram } from "@/components/icons";
+import Image from "next/image";
+import logoImg from "@/components/ui/logo.png";
 
 
 const footerLinks = {
@@ -34,8 +36,12 @@ export function Footer() {
         <div className="py-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Brand */}
           <div className="sm:col-span-2 lg:col-span-1">
-            <div className="font-[family-name:var(--font-prompt)] font-bold text-2xl tracking-widest mb-2">
-              R<span className="text-[#5A5A5A]">P</span>SZZ
+            <div className="mb-3">
+              <Image
+                src={logoImg}
+                alt="RPSZZ Logo"
+                className="h-10 w-auto object-contain brightness-0 invert"
+              />
             </div>
             <p className="text-[#D9D9D9] text-sm font-[family-name:var(--font-sarabun)] mb-1">
               ของดี ไม่ต้องแพง

@@ -5,6 +5,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Search, Menu, X, ShoppingBag } from "lucide-react";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
+import logoImg from "@/components/ui/logo.png";
 
 const navLinks = [
   { href: "/", label: "หน้าแรก" },
@@ -50,14 +52,15 @@ export function Navbar() {
           className="flex items-center gap-2 flex-shrink-0"
           aria-label="RPSZZ หน้าแรก"
         >
-          <div
+          <Image
+            src={logoImg}
+            alt="RPSZZ Logo"
             className={cn(
-              "font-[family-name:var(--font-prompt)] font-bold text-xl tracking-widest leading-none transition-colors duration-300",
-              scrolled || !isHomepage ? "text-[#121212]" : "text-white"
+              "h-8 w-auto object-contain transition-all duration-300",
+              scrolled || !isHomepage ? "" : "brightness-0 invert"
             )}
-          >
-            R<span className="text-[#5A5A5A]">P</span>SZZ
-          </div>
+            priority
+          />
         </Link>
 
         {/* Desktop nav links */}
