@@ -47,9 +47,7 @@ export function Footer() {
               ของดี ไม่ต้องแพง
             </p>
             <p className="text-[#5A5A5A] text-xs font-[family-name:var(--font-sarabun)] mb-6 leading-relaxed">
-              คัดเอง เช็คเอง ซ่อมเอง ขายเอง
-              <br />
-              พร้อมแจ้งสภาพจริงทุกชิ้น
+              ของดีไม่ต้องแพง พร้อมแจ้งสภาพจริงทุกชิ้น
             </p>
 
             {/* Contact */}

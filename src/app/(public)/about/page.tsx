@@ -1,9 +1,10 @@
 import type { Metadata } from 'next'
 import { CheckCircle, Wrench, Star, Shield } from 'lucide-react'
+import { cn } from '@/lib/utils'
 
 export const metadata: Metadata = {
   title: 'เกี่ยวกับเรา',
-  description: 'RPSZZ ร้านสินค้ามือสองที่คัดเอง เช็คเอง ซ่อมเอง ขายเอง',
+  description: 'RPSZZ ร้านสินค้ามือสองคุณภาพดี พร้อมแจ้งสภาพจริงในราคาที่คุ้มค่า',
 }
 
 const GRADES = [
@@ -13,6 +14,22 @@ const GRADES = [
   { pct: 85, label: 'Good', desc: 'สภาพดีทั่วไป เห็นรอยการใช้งานชัดเจน' },
   { pct: 80, label: 'Fair', desc: 'สภาพพอใช้งานได้ ราคาคุ้มค่าที่สุด' },
 ]
+
+function getGradeBadgeStyle(pct: number): string {
+  if (pct >= 99) return 'bg-[#121212] text-white border-[#121212]'
+  if (pct >= 95) return 'bg-[#2A2A2A] text-white border-[#2A2A2A]'
+  if (pct >= 90) return 'bg-[#5A5A5A] text-white border-[#5A5A5A]'
+  if (pct >= 85) return 'bg-[#D9D9D9] text-[#121212] border-[#D9D9D9]'
+  return 'bg-[#F5F5F5] text-[#5A5A5A] border-[#E5E5E5]'
+}
+
+function getGradeBarStyle(pct: number): string {
+  if (pct >= 99) return 'bg-[#121212]'
+  if (pct >= 95) return 'bg-[#2A2A2A]'
+  if (pct >= 90) return 'bg-[#5A5A5A]'
+  if (pct >= 85) return 'bg-[#D9D9D9]'
+  return 'bg-[#C0C0C0]'
+}
 
 export default function AboutPage() {
   return (
@@ -26,10 +43,9 @@ export default function AboutPage() {
           <h1 className="font-[family-name:var(--font-prompt)] font-bold text-white text-3xl md:text-4xl mb-4">
             เกี่ยวกับเรา
           </h1>
-          <p className="text-[#888] font-[family-name:var(--font-sarabun)] text-lg leading-relaxed max-w-2xl mx-auto">
+          <p className="!text-[#D9D9D9] font-[family-name:var(--font-sarabun)] text-lg leading-relaxed max-w-2xl mx-auto">
             RPSZZ คือร้านสินค้ามือสองที่เชื่อว่าของมือสองยังมีคุณค่า
-            เราคัดเอง เช็คเอง ซ่อมเอง และขายเอง
-            และแจ้งสภาพจริงทุกชิ้นให้คุณทราบก่อนตัดสินใจ
+            และพร้อมแจ้งสภาพจริงทุกชิ้นให้คุณทราบก่อนตัดสินใจ
           </p>
         </div>
       </div>
@@ -100,12 +116,21 @@ export default function AboutPage() {
                 key={pct}
                 className="flex items-center gap-4 p-4 bg-white rounded-xl border border-[#E5E5E5]"
               >
-                <div className="flex-shrink-0 w-16 text-center py-2 rounded-lg bg-[#121212]">
-                  <span className="font-[family-name:var(--font-prompt)] font-bold text-white text-lg">{pct}%</span>
+                <div className={cn("flex-shrink-0 w-16 text-center py-2 rounded-lg border font-[family-name:var(--font-prompt)] font-bold text-lg transition-colors duration-200", getGradeBadgeStyle(pct))}>
+                  {pct}%
                 </div>
-                <div className="flex-1">
-                  <p className="font-[family-name:var(--font-prompt)] font-bold text-[#121212] text-base">{label}</p>
-                  <p className="text-sm text-[#5A5A5A] font-[family-name:var(--font-sarabun)]">{desc}</p>
+                <div className="flex-1 min-w-0">
+                  <div className="flex justify-between items-baseline mb-0.5">
+                    <p className="font-[family-name:var(--font-prompt)] font-bold text-[#121212] text-base truncate">{label}</p>
+                  </div>
+                  <p className="text-sm text-[#5A5A5A] font-[family-name:var(--font-sarabun)] mb-2.5">{desc}</p>
+                  {/* Progress bar / หลอดพลัง */}
+                  <div className="w-full h-2 bg-[#F0F0F0] rounded-full overflow-hidden">
+                    <div
+                      className={cn("h-full rounded-full transition-all duration-500", getGradeBarStyle(pct))}
+                      style={{ width: `${pct}%` }}
+                    />
+                  </div>
                 </div>
               </div>
             ))}

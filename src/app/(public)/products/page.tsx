@@ -107,7 +107,7 @@ export default async function ProductsPage({
             สินค้าทั้งหมด
           </h1>
           <p className="text-[#888] font-[family-name:var(--font-sarabun)] text-sm">
-            คัดเอง เช็คเอง ซ่อมเอง ขายเอง
+            สินค้ามือสองผ่านการตรวจสอบสภาพในราคาที่เข้าถึงได้
           </p>
         </div>
       </div>
