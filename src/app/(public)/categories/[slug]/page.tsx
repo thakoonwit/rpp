@@ -1,6 +1,24 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
+
+export const dynamicParams = true
+export const revalidate = 3600
+
+import { createAdminClient } from '@/lib/supabase/admin'
+
+export async function generateStaticParams() {
+  const supabase = createAdminClient()
+  const { data: categories } = await (supabase
+    .from('categories') as any)
+    .select('slug')
+
+  return categories?.map((c: any) => ({
+    slug: c.slug,
+  })) || []
+}
+
+
 import { ProductGrid } from '@/components/products/product-grid'
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'

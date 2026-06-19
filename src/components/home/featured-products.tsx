@@ -1,23 +1,14 @@
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
-import { createClient } from '@/lib/supabase/server'
+import { getProducts } from '@/lib/actions/products'
 import { ProductCard } from '@/components/products/product-card'
 
 export async function FeaturedProducts() {
-  const supabase = await createClient()
-
-  const { data: products } = (await supabase
-    .from('products')
-    .select(`
-      *,
-      product_images(*),
-      categories(*)
-    `)
-    .eq('featured', true)
-    .eq('status', 'active')
-    .order('created_at', { ascending: false })
-    .limit(8)) as any
-
+  const { products } = await getProducts({
+    featured: true,
+    status: 'active',
+    limit: 8,
+  })
 
   if (!products || products.length === 0) return null
 

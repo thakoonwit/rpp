@@ -5,6 +5,9 @@ import { CategoriesSection } from "@/components/home/categories-section";
 import { WhyChooseUs } from "@/components/home/why-choose-us";
 import { SellCTA } from "@/components/home/sell-cta";
 
+export const revalidate = 3600
+
+
 export const metadata: Metadata = {
   title: "RPSZZ — ของดี ไม่ต้องแพง",
   description:

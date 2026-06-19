@@ -1,4 +1,5 @@
 import { createServerClient } from '@supabase/ssr'
+import { createClient as createSupabaseClient } from '@supabase/supabase-js'
 import { cookies } from 'next/headers'
 import type { Database } from '@/lib/database.types'
 
@@ -25,5 +26,14 @@ export async function createClient() {
         },
       },
     }
+  )
+}
+
+// Server-side public client that does NOT read cookies
+// Safe to be used inside unstable_cache() scopes
+export function createPublicClient() {
+  return createSupabaseClient<Database>(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
   )
 }

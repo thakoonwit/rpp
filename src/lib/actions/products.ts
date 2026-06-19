@@ -1,10 +1,63 @@
 'use server'
 
-import { createClient } from '@/lib/supabase/server'
+import { createClient, createPublicClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
-import { revalidatePath } from 'next/cache'
+import { revalidatePath, unstable_cache, updateTag } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { slugify } from '@/lib/utils'
+
+// Static cache wrapper for products list
+const getProductsCached = unstable_cache(
+  async (
+    page: number,
+    limit: number,
+    category?: string,
+    search?: string,
+    status?: string,
+    featured?: boolean
+  ) => {
+    const supabase = createPublicClient()
+    const offset = (page - 1) * limit
+
+    let query = (supabase.from('products') as any)
+      .select(`
+        *,
+        product_images(*),
+        categories(*)
+      `, { count: 'exact' })
+      .order('created_at', { ascending: false })
+      .range(offset, offset + limit - 1)
+
+    if (status) {
+      query = query.eq('status', status)
+    } else {
+      query = query.neq('status', 'draft')
+    }
+
+    if (category) {
+      query = query.eq('categories.slug', category)
+    }
+
+    if (search) {
+      query = query.ilike('name', `%${search}%`)
+    }
+
+    if (featured !== undefined) {
+      query = query.eq('featured', featured)
+    }
+
+    const { data, count, error } = await query
+
+    return {
+      products: data || [],
+      total: count || 0,
+      totalPages: Math.ceil((count || 0) / limit),
+      error,
+    }
+  },
+  ['products-list'],
+  { revalidate: 3600, tags: ['products'] }
+)
 
 export async function getProducts({
   page = 1,
@@ -21,59 +74,38 @@ export async function getProducts({
   status?: string
   featured?: boolean
 } = {}) {
-  const supabase = await createClient()
-  const offset = (page - 1) * limit
-
-  let query = (supabase.from('products') as any)
-    .select(`
-      *,
-      product_images(*),
-      categories(*)
-    `, { count: 'exact' })
-    .order('created_at', { ascending: false })
-    .range(offset, offset + limit - 1)
-
-  if (status) {
-    query = query.eq('status', status)
-  } else {
-    query = query.neq('status', 'draft')
-  }
-
-  if (category) {
-    query = query.eq('categories.slug', category)
-  }
-
-  if (search) {
-    query = query.ilike('name', `%${search}%`)
-  }
-
-  if (featured !== undefined) {
-    query = query.eq('featured', featured)
-  }
-
-  const { data, count, error } = await query
-
-  return {
-    products: data || [],
-    total: count || 0,
-    totalPages: Math.ceil((count || 0) / limit),
-    error,
-  }
+  return getProductsCached(
+    page,
+    limit,
+    category,
+    search,
+    status,
+    featured
+  )
 }
 
+// Static cache wrapper for product details by slug
+const getProductBySlugCached = unstable_cache(
+  async (slug: string) => {
+    const supabase = createPublicClient()
+
+    const { data, error } = await (supabase.from('products') as any)
+      .select(`
+        *,
+        product_images(*),
+        categories(*)
+      `)
+      .eq('slug', slug)
+      .single()
+
+    return { product: data, error }
+  },
+  ['product-detail'],
+  { revalidate: 3600, tags: ['products'] }
+)
+
 export async function getProductBySlug(slug: string) {
-  const supabase = await createClient()
-
-  const { data, error } = await (supabase.from('products') as any)
-    .select(`
-      *,
-      product_images(*),
-      categories(*)
-    `)
-    .eq('slug', slug)
-    .single()
-
-  return { product: data, error }
+  return getProductBySlugCached(slug)
 }
 
 export async function getAllProductsAdmin() {
@@ -127,6 +159,8 @@ export async function createProduct(formData: FormData) {
     return { error: error.message }
   }
 
+  // Purge products cache immediately
+  updateTag('products')
   revalidatePath('/products')
   revalidatePath('/administrator/products')
   redirect(`/administrator/products/${data.id}/edit`)
@@ -165,6 +199,8 @@ export async function updateProduct(id: string, formData: FormData) {
     return { error: error.message }
   }
 
+  // Purge products cache immediately
+  updateTag('products')
   revalidatePath('/products')
   revalidatePath(`/products/${id}`)
   revalidatePath('/administrator/products')
@@ -181,6 +217,8 @@ export async function deleteProduct(id: string) {
     return { error: error.message }
   }
 
+  // Purge products cache immediately
+  updateTag('products')
   revalidatePath('/products')
   revalidatePath('/administrator/products')
   return { success: true }
@@ -232,6 +270,8 @@ export async function uploadProductImage(
     return { error: error.message }
   }
 
+  // Purge products cache immediately
+  updateTag('products')
   revalidatePath(`/administrator/products/${productId}/edit`)
   return { image: data }
 }
@@ -240,6 +280,9 @@ export async function deleteProductImage(imageId: string, productId: string) {
   const supabase = await createClient()
   const { error } = await (supabase.from('product_images') as any).delete().eq('id', imageId)
   if (error) return { error: error.message }
+
+  // Purge products cache immediately
+  updateTag('products')
   revalidatePath(`/administrator/products/${productId}/edit`)
   return { success: true }
 }

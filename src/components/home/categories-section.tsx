@@ -1,14 +1,8 @@
 import Link from 'next/link'
-import { createClient } from '@/lib/supabase/server'
+import { getCategories } from '@/lib/actions/categories'
 
 export async function CategoriesSection() {
-  const supabase = await createClient()
-
-  const { data: categories } = (await supabase
-    .from('categories')
-    .select('*')
-    .order('sort_order')) as any
-
+  const { categories } = await getCategories()
 
   if (!categories || categories.length === 0) return null
 

@@ -4,6 +4,25 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowLeft, CheckCircle, Wrench, ClipboardList } from 'lucide-react'
 import { createClient } from '@/lib/supabase/server'
+
+export const dynamicParams = true
+export const revalidate = 3600
+
+import { createAdminClient } from '@/lib/supabase/admin'
+
+export async function generateStaticParams() {
+  const supabase = createAdminClient()
+  const { data: products } = await (supabase
+    .from('products') as any)
+    .select('slug')
+    .eq('status', 'active')
+
+  return products?.map((p: any) => ({
+    slug: p.slug,
+  })) || []
+}
+
+
 import { ConditionBadge } from '@/components/products/condition-badge'
 import { Button } from '@/components/ui/button'
 import { formatPrice, formatDate } from '@/lib/utils'

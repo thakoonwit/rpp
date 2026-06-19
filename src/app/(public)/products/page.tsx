@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import { Suspense } from 'react'
 import { createClient } from '@/lib/supabase/server'
 import { ProductGrid } from '@/components/products/product-grid'
+import { ProductGridSkeleton } from '@/components/products/product-skeleton'
+
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Search, SlidersHorizontal } from 'lucide-react'
@@ -191,17 +193,10 @@ export default async function ProductsPage({
         )}
 
         {/* Products */}
-        <Suspense
-          fallback={
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-              {Array.from({ length: 8 }).map((_, i) => (
-                <div key={i} className="rounded-xl bg-[#F8F8F8] aspect-square animate-pulse" />
-              ))}
-            </div>
-          }
-        >
+        <Suspense fallback={<ProductGridSkeleton count={8} />}>
           <ProductsContent search={search} status={status} page={page} />
         </Suspense>
+
       </div>
     </div>
   )
